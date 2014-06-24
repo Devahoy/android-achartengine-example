@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends ActionBarActivity {
-
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
         public PlaceholderFragment() {}
         
         private View mView;
+        private GraphicalView mGraphView;
         
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
             XYSeries seriesA = new XYSeries("Googla");
             XYSeries seriesB = new XYSeries("Microsa");
             XYSeries seriesC = new XYSeries("Appla");
-            
+  
             int length = index.length;
             for (int i = 0; i < length; i++) {
                 seriesA.add(index[i], incomeA[i]);
@@ -91,6 +92,7 @@ public class MainActivity extends ActionBarActivity {
             dataset.addSeries(seriesA);
             dataset.addSeries(seriesB);
             dataset.addSeries(seriesC);
+            
 
 
             XYMultipleSeriesRenderer multipleSeriesRenderer
@@ -116,19 +118,25 @@ public class MainActivity extends ActionBarActivity {
             multipleSeriesRenderer.addSeriesRenderer(rendererA);
             multipleSeriesRenderer.addSeriesRenderer(rendererB);
             multipleSeriesRenderer.addSeriesRenderer(rendererC);
+            
 
             drawChart(dataset, multipleSeriesRenderer);
         }
 
         private void drawChart(XYMultipleSeriesDataset dataset,
                                XYMultipleSeriesRenderer renderer) {
-            GraphicalView graphView =
-                    ChartFactory.getLineChartView(getActivity(), dataset, renderer);
+        	
+        	if (null == mGraphView) {
+                GraphicalView graphView =
+                        ChartFactory.getLineChartView(getActivity(), dataset, renderer);
 
-            RelativeLayout container =
-                    (RelativeLayout) mView.findViewById(R.id.graph_container);
+                RelativeLayout container =
+                        (RelativeLayout) mView.findViewById(R.id.graph_container);
 
-            container.addView(graphView);
+                container.addView(graphView);
+        	} else {
+        		mGraphView.repaint();
+        	}
         }
         
     }
