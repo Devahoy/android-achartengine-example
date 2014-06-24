@@ -127,13 +127,13 @@ public class MainActivity extends ActionBarActivity {
                                XYMultipleSeriesRenderer renderer) {
         	
         	if (null == mGraphView) {
-                GraphicalView graphView =
+        		mGraphView =
                         ChartFactory.getLineChartView(getActivity(), dataset, renderer);
 
                 RelativeLayout container =
                         (RelativeLayout) mView.findViewById(R.id.graph_container);
 
-                container.addView(graphView);
+                container.addView(mGraphView);
         	} else {
         		mGraphView.repaint();
         	}
